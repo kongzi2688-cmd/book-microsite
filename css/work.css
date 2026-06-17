@@ -1,0 +1,252 @@
+/* ============================================
+   WORK SECTION — 나의 작업물 (단일 중앙)
+============================================ */
+
+#work {
+  background: var(--color-bg-primary);
+}
+
+/* ── 중앙 레이아웃 ── */
+.work-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  padding-top: var(--space-md);
+}
+
+/* ── 섹션 타이틀 ── */
+.work-tagline {
+  font-family: var(--font-serif-kr);
+  font-size: var(--fs-h3);
+  color: var(--color-text-dim);
+  text-align: center;
+  word-break: keep-all;
+  font-style: italic;
+}
+
+/* ── 작업물 카드 (단일 중앙) ── */
+.work-card {
+  width: min(560px, 90vw);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  cursor: pointer;
+  position: relative;
+  group: true;
+}
+
+.work-card-image-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  aspect-ratio: 16/10;
+}
+
+.work-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease, filter 0.7s ease;
+  filter: grayscale(20%) brightness(0.85);
+}
+
+.work-card:hover .work-card-image {
+  transform: scale(1.04);
+  filter: grayscale(0%) brightness(1);
+}
+
+/* 오버레이 */
+.work-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5,5,15,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  backdrop-filter: blur(2px);
+}
+
+.work-card:hover .work-card-overlay {
+  opacity: 1;
+}
+
+.work-card-overlay span {
+  font-family: var(--font-en-grotesk);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-text-primary);
+  padding: 0.6rem 1.5rem;
+  transition: all var(--transition-fast);
+}
+
+.work-card:hover .work-card-overlay span {
+  border-color: var(--color-accent-blue);
+  color: var(--color-accent-blue);
+  box-shadow: var(--glow-blue);
+}
+
+/* 플레이스홀더 */
+.work-card-placeholder {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--color-bg-card), #1a1a3a);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--color-text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  transition: border-color var(--transition-normal);
+}
+
+.work-card:hover .work-card-placeholder {
+  border-color: var(--color-accent-blue);
+}
+
+/* 텍스트 영역 */
+.work-card-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.work-card-title {
+  font-family: var(--font-serif-kr);
+  font-size: var(--fs-h3);
+  color: var(--color-text-primary);
+}
+
+.work-card-desc {
+  font-family: var(--font-sans-kr);
+  font-size: var(--fs-body);
+  line-height: 1.8;
+  color: var(--color-text-dim);
+  max-width: 440px;
+  margin: 0 auto;
+  word-break: keep-all;
+}
+
+/* 자세히 보기 버튼 */
+.work-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-en-grotesk);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  border: 1px solid var(--color-border);
+  padding: 0.7rem 1.8rem;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  background: transparent;
+}
+
+.work-card-btn:hover {
+  color: var(--color-accent-blue);
+  border-color: var(--color-accent-blue);
+  box-shadow: var(--glow-blue);
+  transform: translateY(-2px);
+}
+
+/* ── 모달 ── */
+.work-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5,5,15,0.95);
+  z-index: 2000;
+  backdrop-filter: blur(10px);
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.work-modal-overlay.open {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+.work-modal {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.work-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-family: var(--font-en-grotesk);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--color-text-dim);
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color var(--transition-fast);
+  background: none;
+  border: none;
+}
+
+.work-modal-close:hover {
+  color: var(--color-text-primary);
+}
+
+.work-modal-img {
+  width: 100%;
+  object-fit: cover;
+  max-height: 400px;
+}
+
+.work-modal-body {
+  padding: 2rem;
+}
+
+.work-modal-title {
+  font-family: var(--font-serif-kr);
+  font-size: var(--fs-h2);
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+
+.work-modal-desc {
+  font-family: var(--font-sans-kr);
+  font-size: var(--fs-body);
+  line-height: 2;
+  color: var(--color-text-dim);
+  word-break: keep-all;
+}
+
+/* ── 푸터 ── */
+#site-footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--color-border);
+  position: relative;
+  z-index: 1;
+}
+
+.footer-text {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--color-text-dim);
+  opacity: 0.5;
+}

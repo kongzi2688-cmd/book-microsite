@@ -1,0 +1,239 @@
+/* ============================================
+   STORY SECTION
+============================================ */
+
+#story {
+  background: var(--color-bg-primary);
+}
+
+#story .section-label {
+  color: #8ad5ff;
+}
+
+/* ── Story 제목 스타일 ── */
+.story-title {
+  font-family: 'ChosunIlboMyungjo', serif;
+  font-size: 32pt;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+/* ── 메인 레이아웃 ── */
+.story-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  margin-top: var(--space-lg);
+  min-height: 500px;
+}
+
+/* ── 왼쪽: 단편 인덱스 ── */
+.story-index {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-right: 1px solid var(--color-border);
+  padding-right: 2rem;
+}
+
+.story-index-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(42, 42, 74, 0.4);
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.story-index-item::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--gradient-button);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.story-index-item:hover,
+.story-index-item.active {
+  padding-left: 0.5rem;
+}
+
+.story-index-item:hover::before,
+.story-index-item.active::before {
+  opacity: 1;
+}
+
+.story-index-item.active .story-num {
+  color: #8ad5ff;
+}
+
+.story-index-item.active .story-index-title {
+  color: var(--color-text-primary);
+}
+
+.story-num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: #8ad5ff;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  transition: color var(--transition-normal);
+}
+
+.story-index-title {
+  font-family: var(--font-sans-kr);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--color-text-dim);
+  word-break: keep-all;
+  transition: color var(--transition-normal);
+}
+
+.story-index-item:hover .story-index-title {
+  color: var(--color-text-primary);
+}
+
+/* ── 오른쪽: 단편 상세 패널 ── */
+.story-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.story-detail {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+  pointer-events: none;
+}
+
+.story-detail.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  position: relative;
+}
+
+/* 단편 무드 이미지 */
+.story-mood-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.7) saturate(0.8);
+  border: 1px solid var(--color-border);
+}
+
+.story-mood-placeholder {
+  width: 100%;
+  height: 260px;
+  background: linear-gradient(135deg, var(--color-bg-card), #1a1a3a);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--color-border);
+}
+
+/* 단편 메타 */
+.story-detail-num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: #8ad5ff;
+}
+
+.story-detail-title {
+  font-family: var(--font-serif-kr);
+  font-size: var(--fs-h2);
+  color: var(--color-text-primary);
+  line-height: 1.3;
+}
+
+/* 감성 키워드 태그 */
+.story-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.story-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-dim);
+  border-radius: 1px;
+  transition: all var(--transition-fast);
+}
+
+.story-tag:hover {
+  border-color: var(--color-accent-blue);
+  color: var(--color-accent-blue);
+}
+
+/* 시놉시스 */
+.story-synopsis {
+  font-family: var(--font-sans-kr);
+  font-size: var(--fs-body);
+  line-height: 2;
+  color: var(--color-text-dim);
+  word-break: keep-all;
+}
+
+/* 인상적인 문장 */
+.story-highlight {
+  border-left: 2px solid var(--color-accent-violet);
+  padding-left: 1.5rem;
+  font-family: var(--font-serif-kr);
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--color-text-primary);
+  font-style: italic;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 900px) {
+  .story-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .story-index {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    padding-right: 0;
+    padding-bottom: 1.5rem;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+  }
+
+  .story-index-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 140px;
+    border-bottom: none;
+    border-right: 1px solid var(--color-border);
+    padding: 0.75rem 1rem;
+  }
+
+  .story-index-item::before { display: none; }
+
+  .story-detail { position: relative; }
+}

@@ -1,0 +1,203 @@
+/* ============================================
+   FONTS DEFINITIONS
+   ============================================ */
+
+/* 조선일보명조 */
+@font-face {
+  font-family: 'ChosunIlboMyungjo';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+  font-weight: normal;
+  font-display: swap;
+}
+
+/* Pretendard */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+}
+
+/* ============================================
+   HOME SECTION
+============================================ */
+
+#home {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000; /* 검은색 배경 */
+}
+
+/* ── 별 배경 캔버스 레이어 ── */
+.home-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* .home-content (z-index: 2)보다 뒤에 배치 */
+  pointer-events: none; /* 클릭/드래그 동작 방해 방지 */
+}
+
+/* ── 홈 콘텐츠 컨테이너 ── */
+.home-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 1. Kim Cho-yeop 2019 SF Short Fiction */
+.home-content .home-chapter {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #8ad5ff;
+  margin: 0;
+  opacity: 0;
+  animation: fadeInDown 0.8s ease 0.5s forwards;
+}
+
+/* 2. 메인 타이틀 (조선일보명조, 50pt) */
+.home-content .home-title {
+  font-family: 'ChosunIlboMyungjo', serif;
+  font-size: 50pt;
+  font-weight: normal;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  margin: 0.5rem 0;
+  white-space: nowrap;
+  opacity: 0;
+  animation: fadeInUp 1s ease 0.8s forwards;
+  text-shadow: 0 0 40px rgba(138, 213, 255, 0.1);
+}
+
+/* 3. 세계적 찬사를 받는 작가, 김초엽의 대표작 */
+.home-content .home-subtitle,
+.home-content .home-desc {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: #A0A5B5; /* 연한 그레이 톤 유지 */
+  margin: 1.2rem 0 0 0; /* 제목과의 간격 확대 */
+  opacity: 0;
+  animation: fadeInUp 1.1s ease 1s forwards;
+}
+
+/* 3-2. 작가 - 김초엽 출판사 - 허블 상세 정보 */
+.home-content .home-info {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: #A0A5B5; /* 연한 그레이 톤 유지 */
+  margin: 0.8rem 0 0 0; /* 부제와의 간격 */
+  opacity: 0;
+  animation: fadeInUp 1.1s ease 1.15s forwards; /* 부제보다 아주 살짝 늦게 페이드인 */
+}
+
+/* 4. 그리움은 빛보다 느리고, 기다림은 우주보다 넓다. */
+.home-content .home-copy {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 2.2;
+  color: #8ad5ff; /* 블루 액센트 색상 */
+  margin-top: 5rem; /* 부제와의 간격 대폭 확대 */
+  opacity: 0;
+  animation: fadeInUp 1.3s ease 1.3s forwards;
+  word-break: keep-all;
+}
+
+/* ── 스크롤 유도 ── */
+.home-scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeIn 1s ease 2.5s forwards;
+}
+
+.home-scroll-hint span {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.scroll-arrow {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-accent-blue), transparent);
+  animation: fadeInUp 1.5s ease infinite;
+}

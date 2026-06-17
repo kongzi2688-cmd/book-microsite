@@ -1,0 +1,66 @@
+/* ============================================
+   DESIGN TOKENS — 디자인 변수
+   컬러, 폰트, 간격 등 전역 CSS 변수
+============================================ */
+
+:root {
+  /* ── 주조색 (배경) ── */
+  --color-bg-primary:   #05050F;   /* Deep Space  */
+  --color-bg-secondary: #0A0A1A;   /* Void Black  */
+  --color-bg-card:      #0D0D2B;   /* Nebula Dark */
+  --color-bg-overlay:   rgba(5, 5, 15, 0.85);
+
+  /* ── 보조색 (텍스트 · 선) ── */
+  --color-text-primary: #F0F0F5;   /* Star White  */
+  --color-text-dim:     #8888AA;   /* Dim Light   */
+  --color-border:       #2A2A4A;   /* Galaxy Line */
+
+  /* ── 포인트색 (강조) ── */
+  --color-accent-blue:  #4A9EFF;   /* Signal Blue  */
+  --color-accent-teal:  #39D9C6;   /* Aurora Teal  */
+  --color-accent-violet:#7B5EFF;   /* Pulsar Glow  */
+
+  /* ── 그라디언트 ── */
+  --gradient-heading: linear-gradient(135deg, #7B5EFF, #4A9EFF, #39D9C6);
+  --gradient-button:  linear-gradient(135deg, #4A9EFF, #7B5EFF);
+  --gradient-glow:    linear-gradient(135deg, rgba(74,158,255,0.15), rgba(123,94,255,0.15));
+
+  /* ── 타이포그래피 ── */
+  --font-display:   'Black Han Sans', 'Noto Sans KR', sans-serif;
+  --font-serif-kr:  'Noto Serif KR', 'Playfair Display', Georgia, serif;
+  --font-sans-kr:   'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --font-en-grotesk:'Space Grotesk', sans-serif;
+  --font-en-serif:  'Playfair Display', serif;
+  --font-mono:      'JetBrains Mono', monospace;
+
+  /* ── 폰트 사이즈 ── */
+  --fs-hero:   clamp(2.5rem, 6vw, 5rem);
+  --fs-h1:     clamp(2rem, 4vw, 3.5rem);
+  --fs-h2:     clamp(1.5rem, 2.5vw, 2.25rem);
+  --fs-h3:     clamp(1.125rem, 1.8vw, 1.5rem);
+  --fs-body:   clamp(0.9rem, 1.2vw, 1.125rem);
+  --fs-small:  0.8125rem;
+  --fs-gnb:    0.8125rem;
+
+  /* ── 간격 ── */
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  2rem;
+  --space-lg:  4rem;
+  --space-xl:  8rem;
+
+  /* ── 레이아웃 ── */
+  --header-height: 72px;
+  --max-width: 1200px;
+  --section-padding: 120px;
+
+  /* ── 애니메이션 ── */
+  --transition-fast:   150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow:   600ms ease;
+
+  /* ── 그림자 ── */
+  --glow-blue:   0 0 20px rgba(74, 158, 255, 0.35);
+  --glow-violet: 0 0 20px rgba(123, 94, 255, 0.35);
+  --glow-teal:   0 0 20px rgba(57, 217, 198, 0.35);
+}

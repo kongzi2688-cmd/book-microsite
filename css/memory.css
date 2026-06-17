@@ -1,0 +1,194 @@
+/* ============================================
+   MEMORY SECTION — 감성 체험형
+============================================ */
+
+#memory {
+  background: var(--color-bg-secondary);
+  overflow: hidden;
+  padding: 0;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ── 슬라이드 컨테이너 ── */
+.memory-slider {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── 개별 슬라이드 ── */
+.memory-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+.memory-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── 슬라이드 배경 ── */
+.memory-slide-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.35) saturate(0.7);
+  transform: scale(1.05);
+  transition: transform 8s ease;
+}
+
+.memory-slide.active .memory-slide-bg {
+  transform: scale(1);
+}
+
+.memory-slide-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(5,5,15,0.8) 100%);
+}
+
+/* ── 슬라이드 콘텐츠 ── */
+.memory-slide-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  padding: var(--header-height) 2rem 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.memory-story-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+}
+
+.memory-quote {
+  font-family: var(--font-serif-kr);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  line-height: 1.9;
+  color: var(--color-text-primary);
+  font-style: italic;
+  word-break: keep-all;
+}
+
+.memory-quote-source {
+  font-family: var(--font-en-grotesk);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--color-text-dim);
+}
+
+/* ── 내비게이션 버튼 ── */
+.memory-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(5,5,15,0.4);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-dim);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(4px);
+}
+
+.memory-nav:hover {
+  background: rgba(74, 158, 255, 0.15);
+  border-color: var(--color-accent-blue);
+  color: var(--color-accent-blue);
+  box-shadow: var(--glow-blue);
+}
+
+.memory-nav.prev { left: 2rem; }
+.memory-nav.next { right: 2rem; }
+
+/* ── 슬라이드 인디케이터 ── */
+.memory-dots {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 10;
+}
+
+.memory-dot {
+  width: 24px;
+  height: 2px;
+  background: var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border: none;
+}
+
+.memory-dot.active {
+  background: var(--color-accent-blue);
+  box-shadow: var(--glow-blue);
+  width: 48px;
+}
+
+/* ── 헤더 영역 (섹션 제목) ── */
+.memory-header {
+  position: absolute;
+  top: var(--header-height);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  padding-top: var(--space-lg);
+}
+
+.memory-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent-teal);
+}
+
+/* ── 커서 별 효과 ── */
+.cursor-star {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-accent-blue);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px var(--color-accent-blue);
+  transition: opacity 0.3s ease;
+}
+
+body.in-memory .cursor-star {
+  opacity: 1;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 768px) {
+  .memory-nav { display: none; }
+  .memory-quote { font-size: 1.1rem; }
+}
