@@ -945,7 +945,7 @@ export default function Home() {
               {/* 우측 칼럼 - 유튜브 영상 */}
               <div className="work-card reveal" id="work-card-3" role="button" tabIndex={0} aria-label="유튜브 영상">
                 <div className="work-card-image-wrap" onClick={() => window.open('https://www.youtube.com/watch?v=ko_QgC5NlZY&feature=youtu.be', '_blank')}>
-                  <img src={`${BASE_PATH}/assets/images/youtube-thumbnail.jpg`} alt="유튜브 영상 썸네일" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <img src="https://img.youtube.com/vi/ko_QgC5NlZY/maxresdefault.jpg" alt="유튜브 영상 썸네일" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   <div className="work-card-overlay"><span>Watch Video</span></div>
                 </div>
                 <div className="work-card-info">
