@@ -27,7 +27,7 @@ body {
 /* Trail 파티클 — 마우스 움직임을 따라 생성되는 작은 흰색 점들 */
 .cursor-trail {
   position: fixed;
-  width: 3;
+  width: 3px;
   height: 3px;
   border-radius: 90%;
   background: #ffffff;

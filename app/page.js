@@ -2,11 +2,13 @@
 
 import { useEffect } from 'react'
 
+const BASE_PATH = '/book-microsite'
+
 export default function Home() {
   // ─── 커스텀 마우스 커서 스크립트 로드 ────────────────────────────────────
   useEffect(() => {
     const script = document.createElement('script')
-    script.src = '/js/cursor-effect.js'
+    script.src = `${BASE_PATH}/js/cursor-effect.js`
     script.async = true
     document.body.appendChild(script)
     
@@ -495,7 +497,7 @@ export default function Home() {
           <div className="section-inner">
             <div className="intro-container">
               <div className="intro-image reveal-left">
-                <img src="/assets/images/책표지.jpeg" alt="우리가 빛의 속도로 갈 수 없다면 책 표지" className="intro-book-image" />
+                <img src={`${BASE_PATH}/assets/images/책표지.jpeg`} alt="우리가 빛의 속도로 갈 수 없다면 책 표지" className="intro-book-image" />
               </div>
               <div className="intro-divider"></div>
 
@@ -518,7 +520,7 @@ export default function Home() {
             <hr className="section-divider reveal" />
             <div className="author-grid">
               <div className="author-photo-wrap reveal-left">
-                <img src="/assets/images/author-photo.png" className="author-photo" alt="김초엽 작가" />
+                <img src={`${BASE_PATH}/assets/images/author-photo.png`} className="author-photo" alt="김초엽 작가" />
               </div>
               <div className="author-info reveal-right">
                 <div>
@@ -577,162 +579,162 @@ export default function Home() {
               <p className="author-books-title">Other Works</p>
               <div className="author-books-grid">
                 <div className="book-card" role="link" tabIndex={0} aria-label="파견자들">
-                  <img src="/assets/images/파견자들.jpeg" alt="파견자들 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/파견자들.jpeg`} alt="파견자들 책 표지" className="book-card-cover" />
                   <p className="book-card-title">파견자들</p>
                   <p className="book-card-year">2015</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="관내분실">
-                  <img src="/assets/images/관내분실.jpeg" alt="관내분실 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/관내분실.jpeg`} alt="관내분실 책 표지" className="book-card-cover" />
                   <p className="book-card-title">관내분실</p>
                   <p className="book-card-year">2018</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="토막난 우주를 안고서">
-                  <img src="/assets/images/토막 난 우주를 안고서.jpeg" alt="토막난 우주를 안고서 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/토막 난 우주를 안고서.jpeg`} alt="토막난 우주를 안고서 책 표지" className="book-card-cover" />
                   <p className="book-card-title">토막난 우주를 안고서</p>
                   <p className="book-card-year">2019</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="방금 떠나온 세계">
-                  <img src="/assets/images/방금 떠나온 세계.jpeg" alt="방금 떠나온 세계 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/방금 떠나온 세계.jpeg`} alt="방금 떠나온 세계 책 표지" className="book-card-cover" />
                   <p className="book-card-title">방금 떠나온 세계</p>
                   <p className="book-card-year">2020</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="해파리 만개">
-                  <img src="/assets/images/해파리만개.jpeg" alt="해파리 만개 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/해파리만개.jpeg`} alt="해파리 만개 책 표지" className="book-card-cover" />
                   <p className="book-card-title">해파리 만개</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="양면의 조개껍데기">
-                  <img src="/assets/images/양면의 조개껍데기.jpeg" alt="양면의 조개껍데기 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/양면의 조개껍데기.jpeg`} alt="양면의 조개껍데기 책 표지" className="book-card-cover" />
                   <p className="book-card-title">양면의 조개껍데기</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="지구 끝의 온실">
-                  <img src="/assets/images/지구 끝의 온실.jpeg" alt="지구 끝의 온실 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/지구 끝의 온실.jpeg`} alt="지구 끝의 온실 책 표지" className="book-card-cover" />
                   <p className="book-card-title">지구 끝의 온실</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="행성어 서점">
-                  <img src="/assets/images/행성어 서점.jpeg" alt="행성어 서점 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/행성어 서점.jpeg`} alt="행성어 서점 책 표지" className="book-card-cover" />
                   <p className="book-card-title">행성어 서점</p>
                   <p className="book-card-year">2022</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="므레모사">
-                  <img src="/assets/images/므레모사.jpeg" alt="므레모사 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/므레모사.jpeg`} alt="므레모사 책 표지" className="book-card-cover" />
                   <p className="book-card-title">므레모사</p>
                   <p className="book-card-year">2023</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="아무튼, SF게임">
-                  <img src="/assets/images/아무튼, SF 게임.jpeg" alt="아무튼, SF게임 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/아무튼, SF 게임.jpeg`} alt="아무튼, SF게임 책 표지" className="book-card-cover" />
                   <p className="book-card-title">아무튼, SF게임</p>
                   <p className="book-card-year">2024</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="책과 우연들">
-                  <img src="/assets/images/책과 우연들.jpeg" alt="책과 우연들 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/책과 우연들.jpeg`} alt="책과 우연들 책 표지" className="book-card-cover" />
                   <p className="book-card-title">책과 우연들</p>
                   <p className="book-card-year">2025</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="관내분실">
-                  <img src="/assets/images/관내분실.jpeg" alt="관내분실 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/관내분실.jpeg`} alt="관내분실 책 표지" className="book-card-cover" />
                   <p className="book-card-title">관내분실</p>
                   <p className="book-card-year">2018</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="토막난 우주를 안고서">
-                  <img src="/assets/images/토막 난 우주를 안고서.jpeg" alt="토막난 우주를 안고서 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/토막 난 우주를 안고서.jpeg`} alt="토막난 우주를 안고서 책 표지" className="book-card-cover" />
                   <p className="book-card-title">토막난 우주를 안고서</p>
                   <p className="book-card-year">2019</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="방금 떠나온 세계">
-                  <img src="/assets/images/방금 떠나온 세계.jpeg" alt="방금 떠나온 세계 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/방금 떠나온 세계.jpeg`} alt="방금 떠나온 세계 책 표지" className="book-card-cover" />
                   <p className="book-card-title">방금 떠나온 세계</p>
                   <p className="book-card-year">2020</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="해파리 만개">
-                  <img src="/assets/images/해파리만개.jpeg" alt="해파리 만개 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/해파리만개.jpeg`} alt="해파리 만개 책 표지" className="book-card-cover" />
                   <p className="book-card-title">해파리 만개</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="양면의 조개껍데기">
-                  <img src="/assets/images/양면의 조개껍데기.jpeg" alt="양면의 조개껍데기 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/양면의 조개껍데기.jpeg`} alt="양면의 조개껍데기 책 표지" className="book-card-cover" />
                   <p className="book-card-title">양면의 조개껍데기</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="지구 끝의 온실">
-                  <img src="/assets/images/지구 끝의 온실.jpeg" alt="지구 끝의 온실 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/지구 끝의 온실.jpeg`} alt="지구 끝의 온실 책 표지" className="book-card-cover" />
                   <p className="book-card-title">지구 끝의 온실</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="행성어 서점">
-                  <img src="/assets/images/행성어 서점.jpeg" alt="행성어 서점 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/행성어 서점.jpeg`} alt="행성어 서점 책 표지" className="book-card-cover" />
                   <p className="book-card-title">행성어 서점</p>
                   <p className="book-card-year">2022</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="므레모사">
-                  <img src="/assets/images/므레모사.jpeg" alt="므레모사 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/므레모사.jpeg`} alt="므레모사 책 표지" className="book-card-cover" />
                   <p className="book-card-title">므레모사</p>
                   <p className="book-card-year">2023</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="아무튼, SF게임">
-                  <img src="/assets/images/아무튼, SF 게임.jpeg" alt="아무튼, SF게임 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/아무튼, SF 게임.jpeg`} alt="아무튼, SF게임 책 표지" className="book-card-cover" />
                   <p className="book-card-title">아무튼, SF게임</p>
                   <p className="book-card-year">2024</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="책과 우연들">
-                  <img src="/assets/images/책과 우연들.jpeg" alt="책과 우연들 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/책과 우연들.jpeg`} alt="책과 우연들 책 표지" className="book-card-cover" />
                   <p className="book-card-title">책과 우연들</p>
                   <p className="book-card-year">2025</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="파견자들">
-                  <img src="/assets/images/파견자들.jpeg" alt="파견자들 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/파견자들.jpeg`} alt="파견자들 책 표지" className="book-card-cover" />
                   <p className="book-card-title">파견자들</p>
                   <p className="book-card-year">2015</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="관내분실">
-                  <img src="/assets/images/관내분실.jpeg" alt="관내분실 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/관내분실.jpeg`} alt="관내분실 책 표지" className="book-card-cover" />
                   <p className="book-card-title">관내분실</p>
                   <p className="book-card-year">2018</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="토막난 우주를 안고서">
-                  <img src="/assets/images/토막 난 우주를 안고서.jpeg" alt="토막난 우주를 안고서 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/토막 난 우주를 안고서.jpeg`} alt="토막난 우주를 안고서 책 표지" className="book-card-cover" />
                   <p className="book-card-title">토막난 우주를 안고서</p>
                   <p className="book-card-year">2019</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="방금 떠나온 세계">
-                  <img src="/assets/images/방금 떠나온 세계.jpeg" alt="방금 떠나온 세계 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/방금 떠나온 세계.jpeg`} alt="방금 떠나온 세계 책 표지" className="book-card-cover" />
                   <p className="book-card-title">방금 떠나온 세계</p>
                   <p className="book-card-year">2020</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="해파리 만개">
-                  <img src="/assets/images/해파리만개.jpeg" alt="해파리 만개 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/해파리만개.jpeg`} alt="해파리 만개 책 표지" className="book-card-cover" />
                   <p className="book-card-title">해파리 만개</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="양면의 조개껍데기">
-                  <img src="/assets/images/양면의 조개껍데기.jpeg" alt="양면의 조개껍데기 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/양면의 조개껍데기.jpeg`} alt="양면의 조개껍데기 책 표지" className="book-card-cover" />
                   <p className="book-card-title">양면의 조개껍데기</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="지구 끝의 온실">
-                  <img src="/assets/images/지구 끝의 온실.jpeg" alt="지구 끝의 온실 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/지구 끝의 온실.jpeg`} alt="지구 끝의 온실 책 표지" className="book-card-cover" />
                   <p className="book-card-title">지구 끝의 온실</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="행성어 서점">
-                  <img src="/assets/images/행성어 서점.jpeg" alt="행성어 서점 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/행성어 서점.jpeg`} alt="행성어 서점 책 표지" className="book-card-cover" />
                   <p className="book-card-title">행성어 서점</p>
                   <p className="book-card-year">2022</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="므레모사">
-                  <img src="/assets/images/므레모사.jpeg" alt="므레모사 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/므레모사.jpeg`} alt="므레모사 책 표지" className="book-card-cover" />
                   <p className="book-card-title">므레모사</p>
                   <p className="book-card-year">2023</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="아무튼, SF게임">
-                  <img src="/assets/images/아무튼, SF 게임.jpeg" alt="아무튼, SF게임 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/아무튼, SF 게임.jpeg`} alt="아무튼, SF게임 책 표지" className="book-card-cover" />
                   <p className="book-card-title">아무튼, SF게임</p>
                   <p className="book-card-year">2024</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="책과 우연들">
-                  <img src="/assets/images/책과 우연들.jpeg" alt="책과 우연들 책 표지" className="book-card-cover" />
+                  <img src={`${BASE_PATH}/assets/images/책과 우연들.jpeg`} alt="책과 우연들 책 표지" className="book-card-cover" />
                   <p className="book-card-title">책과 우연들</p>
                   <p className="book-card-year">2025</p>
                 </div>
@@ -776,19 +778,19 @@ export default function Home() {
                 ].map(s => (
                   <article id={s.id} className="story-detail" role="tabpanel" key={s.id}>
                     {s.id === 'story-01' ? (
-                      <img src="/assets/images/챕터1.png" alt="순례자들은 왜 돌아오지 않는가 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      <img src={`${BASE_PATH}/assets/images/챕터1.png`} alt="순례자들은 왜 돌아오지 않는가 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
                     ) : s.id === 'story-02' ? (
-                      <img src="/assets/images/챕터2.png" alt="스펙트럼 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      <img src={`${BASE_PATH}/assets/images/챕터2.png`} alt="스펙트럼 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
                       ) : s.id === 'story-03' ? (
-                      <img src="/assets/images/챕터3.png" alt="공생 가설 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      <img src={`${BASE_PATH}/assets/images/챕터3.png`} alt="공생 가설 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
                       ) : s.id === 'story-04' ? (
-                      <img src="/assets/images/챕터4.png" alt="우리가 빛의 속도로 갈 수 없다면 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      <img src={`${BASE_PATH}/assets/images/챕터4.png`} alt="우리가 빛의 속도로 갈 수 없다면 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
                       ) : s.id === 'story-05' ? (
-                      <img src="/assets/images/챕터5.png" alt="감정의 물성 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      <img src={`${BASE_PATH}/assets/images/챕터5.png`} alt="감정의 물성 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
                       ) : s.id === 'story-06' ? (
-                      <img src="/assets/images/챕터6.png" alt="관내분실 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      <img src={`${BASE_PATH}/assets/images/챕터6.png`} alt="관내분실 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
                       ) : s.id === 'story-07' ? (
-                      <img src="/assets/images/챕터7.png" alt="나의 우주 영웅에 관하여 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      <img src={`${BASE_PATH}/assets/images/챕터7.png`} alt="나의 우주 영웅에 관하여 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
                     ) : (
                       <div className="story-mood-placeholder" aria-label={`단편 배경 이미지 — ${s.title}`}>IMAGE: {s.id}.jpg</div>
                     )}
@@ -859,7 +861,7 @@ export default function Home() {
             <hr className="section-divider reveal" />
             <div className="purchase-inner">
               <div className="purchase-book-wrap reveal">
-                <img src="/assets/images/책표지.jpeg" alt="우리가 빛의 속도로 갈 수 없다면 책 표지" className="purchase-book-image" style={{ objectFit: 'contain', width: '100%', height: '100%', display: 'block' }} />
+                <img src={`${BASE_PATH}/assets/images/책표지.jpeg`} alt="우리가 빛의 속도로 갈 수 없다면 책 표지" className="purchase-book-image" style={{ objectFit: 'contain', width: '100%', height: '100%', display: 'block' }} />
               </div>
               <p className="purchase-copy reveal">
                 지금, 빛의 속도로<br />당신에게 닿기를.
@@ -898,7 +900,7 @@ export default function Home() {
                 document.querySelector('.work-modal-overlay-1').classList.add('open');
               }}>
                 <div className="work-card-image-wrap">
-                  <img src="/assets/images/최종플라이어1.png" alt="Type Flyer 이미지" className="work-card-image" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <img src={`${BASE_PATH}/assets/images/최종플라이어1.png`} alt="Type Flyer 이미지" className="work-card-image" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   <div className="work-card-overlay"><span>View Work</span></div>
                 </div>
                 <div className="work-card-info">
@@ -920,7 +922,7 @@ export default function Home() {
                 document.querySelector('.work-modal-overlay-2').classList.add('open');
               }}>
                 <div className="work-card-image-wrap">
-                  <img src="/assets/images/1_최현지_우리가 빛의 속도로 갈 수 없다면.gif" alt="Motion 이미지" className="work-card-image" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', aspectRatio: '1 / 1' }} />
+                  <img src={`${BASE_PATH}/assets/images/1_최현지_우리가 빛의 속도로 갈 수 없다면.gif`} alt="Motion 이미지" className="work-card-image" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', aspectRatio: '1 / 1' }} />
                   <div className="work-card-overlay"><span>View Work</span></div>
                 </div>
                 <div className="work-card-info">
@@ -943,7 +945,7 @@ export default function Home() {
               {/* 우측 칼럼 - 유튜브 영상 */}
               <div className="work-card reveal" id="work-card-3" role="button" tabIndex={0} aria-label="유튜브 영상">
                 <div className="work-card-image-wrap" onClick={() => window.open('https://www.youtube.com/watch?v=ko_QgC5NlZY&feature=youtu.be', '_blank')}>
-                  <img src="https://img.youtube.com/vi/ko_QgC5NlZY/maxresdefault.jpg" alt="유튜브 영상 썸네일" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <img src={`${BASE_PATH}/assets/images/youtube-thumbnail.jpg`} alt="유튜브 영상 썸네일" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   <div className="work-card-overlay"><span>Watch Video</span></div>
                 </div>
                 <div className="work-card-info">
@@ -977,7 +979,7 @@ export default function Home() {
           <button className="work-modal-close" aria-label="모달 닫기" onClick={(e) => {
             e.target.closest('.work-modal-overlay-1').classList.remove('open');
           }}>✕ Close</button>
-          <img src="/assets/images/최종플라이어1.png" alt="Type Flyer 상세 이미지" style={{ width:'100%', height:'auto', display:'block' }} />
+          <img src={`${BASE_PATH}/assets/images/최종플라이어1.png`} alt="Type Flyer 상세 이미지" style={{ width:'100%', height:'auto', display:'block' }} />
           <div className="work-modal-body">
             <h2 className="work-modal-title">Type Flyer</h2>
             <p className="work-modal-desc">
@@ -993,7 +995,7 @@ export default function Home() {
           <button className="work-modal-close" aria-label="모달 닫기" onClick={(e) => {
             e.target.closest('.work-modal-overlay-2').classList.remove('open');
           }}>✕ Close</button>
-          <img src="/assets/images/1_최현지_우리가 빛의 속도로 갈 수 없다면.gif" alt="Motion 상세 이미지" style={{ width:'100%', height:'auto', display:'block' }} />
+          <img src={`${BASE_PATH}/assets/images/1_최현지_우리가 빛의 속도로 갈 수 없다면.gif`} alt="Motion 상세 이미지" style={{ width:'100%', height:'auto', display:'block' }} />
           <div className="work-modal-body">
             <h2 className="work-modal-title">Motion</h2>
             <p className="work-modal-desc">
