@@ -189,9 +189,12 @@
   margin: 0;
 }
 
-/* ── 인터뷰 인용 ── */
+/* ── 인터뷰 섹션 (2칼럼 레이아웃) ── */
 .author-quote-section {
   margin-top: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
 .author-quote-title {
@@ -201,37 +204,55 @@
   text-transform: uppercase;
   color: #8ad5ff;
   margin-bottom: var(--space-md);
+  margin-left: 0rem;
+}
+
+.interview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
 }
 
 .author-quote {
   font-family: var(--font-en-serif);
   font-style: italic;
-  font-size: var(--fs-h3);
+  font-size: 25px;
   line-height: 1.7;
   color: var(--color-text-primary);
   position: relative;
-  padding: 0 0 0 2rem;
-}
-
-.author-quote .quote-kr {
-  font-family: var(--font-serif-kr);
-  font-style: normal;
-  font-size: var(--fs-body);
-  line-height: 2;
-  color: #A0A5B5;
-  margin-top: 1rem;
+  padding: 0;
+  margin: 0;
+  padding-left: 0;
 }
 
 .author-quote::before {
-  content: '"';
+  content: none;
   position: absolute;
-  left: 0;
+  left: -2rem;
   top: -0.5rem;
   font-size: 3rem;
   color: var(--color-accent-violet);
   opacity: 0.4;
   font-family: 'Playfair Display', serif;
   line-height: 1;
+}
+
+.author-quote .quote-kr {
+  font-family: var(--font-serif-kr);
+  font-style: normal;
+  font-size: 15px;
+  line-height: 2.0;
+  color: #A0A5B5;
+  margin-top: 1rem;
+}
+
+/* ── Interview 반응형 ── */
+@media (max-width: 900px) {
+  .interview-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
 }
 
 /* ── 다른 저서 ── */
@@ -353,4 +374,8 @@
   .book-card-year {
     font-size: 0.65rem;
   }
+}
+/* ── Author 섹션 가로폭 조정 ── */
+#author .section-inner {
+  max-width: 1050px;
 }

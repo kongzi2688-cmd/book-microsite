@@ -1,0 +1,40 @@
+/* ═══════════════════════════════════════════════════════════════════
+   커스텀 마우스 커서 스타일 (재구조화)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 기본 마우스 커서 숨김 */
+body {
+  cursor: none !important;
+}
+
+/* 메인 커서 점 — 항상 마우스 위치를 따라다니는 흰색 원형 점 */
+#cursor-main {
+  position: fixed !important;
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 90% !important;
+  background: #ffffff !important;
+  opacity: 1 !important;
+  z-index: 2147483647 !important;
+  pointer-events: none !important;
+  transform: translate(-50%, -50%) !important;
+  box-shadow:
+    0 0 8px #ffffff,
+    0 0 18px rgba(255, 255, 255, 2.0),
+    0 0 32px rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Trail 파티클 — 마우스 움직임을 따라 생성되는 작은 흰색 점들 */
+.cursor-trail {
+  position: fixed;
+  width: 3;
+  height: 3px;
+  border-radius: 90%;
+  background: #ffffff;
+  z-index: 999998;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 5px #ffffff, 0 0 10px rgba(255, 255, 255, 0.6);
+  margin: 0;
+  padding: 0;
+}

@@ -1,14 +1,17 @@
+import Script from 'next/script'
 
 import '../css/reset.css'
 import '../css/variables.css'
 import '../css/animations.css'
 import '../css/layout.css'
 import '../css/home.css'
+import '../css/intro.css'
 import '../css/author.css'
 import '../css/story.css'
 import '../css/memory.css'
 import '../css/purchase.css'
 import '../css/work.css'
+import '../css/cursor.css'
 
 export const metadata = {
   title: '우리가 빛의 속도로 갈 수 없다면 — 김초엽',
@@ -39,7 +42,10 @@ export default function RootLayout({ children }) {
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+         <Script src="/js/cursor-effect.js" strategy="afterInteractive" />
+         </body>
     </html>
   )
 }

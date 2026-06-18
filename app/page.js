@@ -3,6 +3,22 @@
 import { useEffect } from 'react'
 
 export default function Home() {
+  // ─── 커스텀 마우스 커서 스크립트 로드 ────────────────────────────────────
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = '/js/cursor-effect.js'
+    script.async = true
+    document.body.appendChild(script)
+    
+    console.log('✓ Cursor script loaded')
+    
+    return () => {
+      if (script.parentNode) {
+        script.parentNode.removeChild(script)
+      }
+    }
+  }, [])
+
   // ─── Particles (별 배경) ───────────────────────────────────────────────
   useEffect(() => {
     const canvas = document.getElementById('particles-canvas')
@@ -309,71 +325,88 @@ export default function Home() {
     items.forEach(item => item.addEventListener('click', () => showStory(item.dataset.story)))
   }, [])
 
-  // ─── Memory Slider ─────────────────────────────────────────────────────
+  // ─── Memory Letter Form ──────────────────────────────────────────────
   useEffect(() => {
-    const slides = document.querySelectorAll('.memory-slide')
-    const dotsEl = document.querySelectorAll('.memory-dot')
-    const prevBtn = document.querySelector('.memory-nav.prev')
-    const nextBtn = document.querySelector('.memory-nav.next')
-    if (!slides.length) return
+    const fromInput = document.getElementById('memory-from')
+    const messageInput = document.getElementById('memory-message')
+    const sendBtn = document.getElementById('memory-send-btn')
+    const list = document.getElementById('memory-list')
+    const successMsg = document.getElementById('memory-success-msg')
+    let successTimeout
 
-    let current = 0
-    let autoTimer
+    function addLetter() {
+      const from = fromInput?.value.trim()
+      const message = messageInput?.value.trim()
+      if (!from || !message) return
 
-    function goTo(n) {
-      slides[current].classList.remove('active')
-      dotsEl[current]?.classList.remove('active')
-      current = (n + slides.length) % slides.length
-      slides[current].classList.add('active')
-      dotsEl[current]?.classList.add('active')
+      const card = document.createElement('div')
+      card.className = 'memory-card'
+      card.innerHTML = `
+        <div class="memory-card-from">From. ${from}</div>
+        <div class="memory-card-message">${message}</div>
+      `
+      list?.insertBefore(card, list.firstChild)
+      fromInput.value = ''
+      messageInput.value = ''
+
+      // 성공 메시지 표시
+      if (successMsg) {
+        successMsg.classList.add('show')
+        clearTimeout(successTimeout)
+        successTimeout = setTimeout(() => {
+          successMsg.classList.remove('show')
+        }, 2000)
+      }
     }
-    goTo(0)
 
-    function startAuto() { autoTimer = setInterval(() => goTo(current + 1), 5000) }
-    function stopAuto() { clearInterval(autoTimer) }
-    startAuto()
-
-    prevBtn?.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto() })
-    nextBtn?.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto() })
-    dotsEl.forEach((d, i) => d.addEventListener('click', () => { stopAuto(); goTo(i); startAuto() }))
-
-    // Keyboard
-    function onKey(e) {
-      if (e.key === 'ArrowLeft') { stopAuto(); goTo(current - 1); startAuto() }
-      if (e.key === 'ArrowRight') { stopAuto(); goTo(current + 1); startAuto() }
-    }
-    window.addEventListener('keydown', onKey)
-
-    // Touch swipe
-    let startX = 0
-    const slider = document.querySelector('.memory-slider')
-    slider?.addEventListener('touchstart', e => { startX = e.touches[0].clientX }, { passive: true })
-    slider?.addEventListener('touchend', e => {
-      const diff = startX - e.changedTouches[0].clientX
-      if (Math.abs(diff) > 40) { stopAuto(); goTo(current + (diff > 0 ? 1 : -1)); startAuto() }
+    sendBtn?.addEventListener('click', addLetter)
+    messageInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        addLetter()
+      }
     })
 
-    return () => {
-      stopAuto()
-      window.removeEventListener('keydown', onKey)
-    }
+    return () => clearTimeout(successTimeout)
   }, [])
 
   // ─── Work Modal ────────────────────────────────────────────────────────
   useEffect(() => {
-    const card = document.getElementById('work-card-1')
-    const cardBtn = document.querySelector('.work-card-btn')
-    const overlay = document.querySelector('.work-modal-overlay')
-    const closeBtn = document.querySelector('.work-modal-close')
+    // 첫 번째 모달 (Type Flyer)
+    const card1 = document.getElementById('work-card-1')
+    const overlay1 = document.querySelector('.work-modal-overlay-1')
+    const closeBtn1 = overlay1?.querySelector('.work-modal-close')
 
-    function open() { overlay?.classList.add('open'); document.body.style.overflow = 'hidden' }
-    function close() { overlay?.classList.remove('open'); document.body.style.overflow = '' }
+    function open1() { overlay1?.classList.add('open'); document.body.style.overflow = 'hidden' }
+    function close1() { overlay1?.classList.remove('open'); document.body.style.overflow = '' }
 
-    card?.addEventListener('click', open)
-    cardBtn?.addEventListener('click', e => { e.stopPropagation(); open() })
-    closeBtn?.addEventListener('click', close)
-    overlay?.addEventListener('click', e => { if (e.target === overlay) close() })
-    window.addEventListener('keydown', e => { if (e.key === 'Escape') close() })
+    card1?.addEventListener('click', open1)
+    closeBtn1?.addEventListener('click', close1)
+    overlay1?.addEventListener('click', e => { if (e.target === overlay1) close1() })
+
+    // 두 번째 모달 (Motion)
+    const card2 = document.getElementById('work-card-2')
+    const overlay2 = document.querySelector('.work-modal-overlay-2')
+    const closeBtn2 = overlay2?.querySelector('.work-modal-close')
+
+    function open2() { overlay2?.classList.add('open'); document.body.style.overflow = 'hidden' }
+    function close2() { overlay2?.classList.remove('open'); document.body.style.overflow = '' }
+
+    card2?.addEventListener('click', open2)
+    closeBtn2?.addEventListener('click', close2)
+    overlay2?.addEventListener('click', e => { if (e.target === overlay2) close2() })
+
+    // ESC 키로 모든 모달 닫기
+    function handleEscape(e) {
+      if (e.key === 'Escape') {
+        close1()
+        close2()
+      }
+    }
+    window.addEventListener('keydown', handleEscape)
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape)
+    }
   }, [])
 
   // ─── Purchase tabs ─────────────────────────────────────────────────────
@@ -391,6 +424,9 @@ export default function Home() {
 
   return (
     <>
+      {/* 커스텀 마우스 커서 컨테이너 */}
+      <div id="cursor-container" aria-hidden="true"></div>
+
       {/* 파티클 캔버스 */}
       <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
@@ -454,6 +490,27 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ─── 1.5 BOOK INTRO ─── */}
+        <section id="book-intro" className="section" aria-label="책과 사이트 소개">
+          <div className="section-inner">
+            <div className="intro-container">
+              <div className="intro-image reveal-left">
+                <img src="/assets/images/책표지.jpeg" alt="우리가 빛의 속도로 갈 수 없다면 책 표지" className="intro-book-image" />
+              </div>
+              <div className="intro-divider"></div>
+
+              <div className="intro-column intro-left reveal-left">
+                <p className="intro-text">
+                  '우리가 빛의 속도로 갈 수 없다면'은 닿을 수 없는 이를 그리워하며 살아가는 지속적인 사랑을 다루는 책이다. 이 책은 "우리가 빛의 속도조차 갈 수 없는데 같은 우주가 무슨 의미가 있을까?"라는 질문에서 출발하여, 그리움과 사랑이 결국 빛의 속도를 뛰어넘는다는 메시지를 전한다. 특히 작품 속 '그리움, 고립감, 사랑'이라는 감정을 중심으로, 독자가 이에 깊이 공감하고 핵심 질문에 대해 생각해보도록 유도한다.
+                </p>
+                <p className="intro-text">
+                  이 마이크로사이트는 사용자가 책의 핵심 메시지인 '지속되는 사랑과 그리움'을 다채로운 인터랙션으로 경험하도록 설계한다. 이를 위해 사이트를 각기 다른 주제를 가진 4개의 공간으로 나누고, 전체적으로 우주의 분위기를 살려 스크롤과 호버 방식을 중심으로 디자인한다. 마지막으로 배치된 버튼 클릭형 요소는 우주 정거장에 방명록을 남기는 행위를 표현한 것으로, 사용자가 이 일련의 과정을 통해 책 속의 그리움을 직접 체험하도록 만드는 것이 목표이다.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ─── 2. AUTHOR ─── */}
         <section id="author" className="section" aria-label="작가 소개">
           <div className="section-inner">
@@ -503,121 +560,179 @@ export default function Home() {
             </div>
             <div className="author-quote-section reveal">
               <p className="author-quote-title">Interview</p>
-              <blockquote className="author-quote">
-                &quot;광활한 우주에서 나라는 존재를 깨닫게 될 때 인식이 깨어난다. 찰나의 시간에 자신이 있다는 걸 느낀다.&quot;
-                <p className="quote-kr">— 김초엽 인터뷰 발췌</p>
-              </blockquote>
+              <div className="interview-grid">
+                <div className="interview-thumbnail" onClick={() => window.open('https://www.youtube.com/watch?v=wo_I5iMGfak', '_blank')} role="button" tabIndex={0} aria-label="유튜브 인터뷰 영상 재생">
+                  <img src="https://img.youtube.com/vi/wo_I5iMGfak/maxresdefault.jpg" alt="김초엽 인터뷰 영상" />
+                </div>
+                <div className="interview-content">
+                  <blockquote className="author-quote">
+                    &quot;세계를 바꿔볼 수 있다는 거. 세계의 구조를 바꿔보면서,
+                    세계 자체에 대한 새로운 관점을 얻을 수도 있다고 생각하거든요.&quot;
+                    <p className="quote-kr">— [인터뷰] 김초엽 작가가 말하는 'SF의 매력' / KBS — </p>
+                  </blockquote>
+                </div>
+              </div>
             </div>
             <div className="author-books-section reveal">
               <p className="author-books-title">Other Works</p>
               <div className="author-books-grid">
                 <div className="book-card" role="link" tabIndex={0} aria-label="파견자들">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/파견자들.jpeg" alt="파견자들 책 표지" className="book-card-cover" />
                   <p className="book-card-title">파견자들</p>
                   <p className="book-card-year">2015</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="관내분실">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/관내분실.jpeg" alt="관내분실 책 표지" className="book-card-cover" />
                   <p className="book-card-title">관내분실</p>
                   <p className="book-card-year">2018</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="토막난 우주를 안고서">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/토막 난 우주를 안고서.jpeg" alt="토막난 우주를 안고서 책 표지" className="book-card-cover" />
                   <p className="book-card-title">토막난 우주를 안고서</p>
                   <p className="book-card-year">2019</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="방금 떠나온 세계">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/방금 떠나온 세계.jpeg" alt="방금 떠나온 세계 책 표지" className="book-card-cover" />
                   <p className="book-card-title">방금 떠나온 세계</p>
                   <p className="book-card-year">2020</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="해파리 만개">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/해파리만개.jpeg" alt="해파리 만개 책 표지" className="book-card-cover" />
                   <p className="book-card-title">해파리 만개</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="양면의 조개껍데기">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/양면의 조개껍데기.jpeg" alt="양면의 조개껍데기 책 표지" className="book-card-cover" />
                   <p className="book-card-title">양면의 조개껍데기</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="지구 끝의 온실">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/지구 끝의 온실.jpeg" alt="지구 끝의 온실 책 표지" className="book-card-cover" />
                   <p className="book-card-title">지구 끝의 온실</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="행성어 서점">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/행성어 서점.jpeg" alt="행성어 서점 책 표지" className="book-card-cover" />
                   <p className="book-card-title">행성어 서점</p>
                   <p className="book-card-year">2022</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="므레모사">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/므레모사.jpeg" alt="므레모사 책 표지" className="book-card-cover" />
                   <p className="book-card-title">므레모사</p>
                   <p className="book-card-year">2023</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="아무튼, SF게임">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/아무튼, SF 게임.jpeg" alt="아무튼, SF게임 책 표지" className="book-card-cover" />
                   <p className="book-card-title">아무튼, SF게임</p>
                   <p className="book-card-year">2024</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="책과 우연들">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/책과 우연들.jpeg" alt="책과 우연들 책 표지" className="book-card-cover" />
+                  <p className="book-card-title">책과 우연들</p>
+                  <p className="book-card-year">2025</p>
+                </div>
+                <div className="book-card" role="link" tabIndex={0} aria-label="관내분실">
+                  <img src="/assets/images/관내분실.jpeg" alt="관내분실 책 표지" className="book-card-cover" />
+                  <p className="book-card-title">관내분실</p>
+                  <p className="book-card-year">2018</p>
+                </div>
+                <div className="book-card" role="link" tabIndex={0} aria-label="토막난 우주를 안고서">
+                  <img src="/assets/images/토막 난 우주를 안고서.jpeg" alt="토막난 우주를 안고서 책 표지" className="book-card-cover" />
+                  <p className="book-card-title">토막난 우주를 안고서</p>
+                  <p className="book-card-year">2019</p>
+                </div>
+                <div className="book-card" role="link" tabIndex={0} aria-label="방금 떠나온 세계">
+                  <img src="/assets/images/방금 떠나온 세계.jpeg" alt="방금 떠나온 세계 책 표지" className="book-card-cover" />
+                  <p className="book-card-title">방금 떠나온 세계</p>
+                  <p className="book-card-year">2020</p>
+                </div>
+                <div className="book-card" role="link" tabIndex={0} aria-label="해파리 만개">
+                  <img src="/assets/images/해파리만개.jpeg" alt="해파리 만개 책 표지" className="book-card-cover" />
+                  <p className="book-card-title">해파리 만개</p>
+                  <p className="book-card-year">2021</p>
+                </div>
+                <div className="book-card" role="link" tabIndex={0} aria-label="양면의 조개껍데기">
+                  <img src="/assets/images/양면의 조개껍데기.jpeg" alt="양면의 조개껍데기 책 표지" className="book-card-cover" />
+                  <p className="book-card-title">양면의 조개껍데기</p>
+                  <p className="book-card-year">2021</p>
+                </div>
+                <div className="book-card" role="link" tabIndex={0} aria-label="지구 끝의 온실">
+                  <img src="/assets/images/지구 끝의 온실.jpeg" alt="지구 끝의 온실 책 표지" className="book-card-cover" />
+                  <p className="book-card-title">지구 끝의 온실</p>
+                  <p className="book-card-year">2021</p>
+                </div>
+                <div className="book-card" role="link" tabIndex={0} aria-label="행성어 서점">
+                  <img src="/assets/images/행성어 서점.jpeg" alt="행성어 서점 책 표지" className="book-card-cover" />
+                  <p className="book-card-title">행성어 서점</p>
+                  <p className="book-card-year">2022</p>
+                </div>
+                <div className="book-card" role="link" tabIndex={0} aria-label="므레모사">
+                  <img src="/assets/images/므레모사.jpeg" alt="므레모사 책 표지" className="book-card-cover" />
+                  <p className="book-card-title">므레모사</p>
+                  <p className="book-card-year">2023</p>
+                </div>
+                <div className="book-card" role="link" tabIndex={0} aria-label="아무튼, SF게임">
+                  <img src="/assets/images/아무튼, SF 게임.jpeg" alt="아무튼, SF게임 책 표지" className="book-card-cover" />
+                  <p className="book-card-title">아무튼, SF게임</p>
+                  <p className="book-card-year">2024</p>
+                </div>
+                <div className="book-card" role="link" tabIndex={0} aria-label="책과 우연들">
+                  <img src="/assets/images/책과 우연들.jpeg" alt="책과 우연들 책 표지" className="book-card-cover" />
                   <p className="book-card-title">책과 우연들</p>
                   <p className="book-card-year">2025</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="파견자들">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/파견자들.jpeg" alt="파견자들 책 표지" className="book-card-cover" />
                   <p className="book-card-title">파견자들</p>
                   <p className="book-card-year">2015</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="관내분실">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/관내분실.jpeg" alt="관내분실 책 표지" className="book-card-cover" />
                   <p className="book-card-title">관내분실</p>
                   <p className="book-card-year">2018</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="토막난 우주를 안고서">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/토막 난 우주를 안고서.jpeg" alt="토막난 우주를 안고서 책 표지" className="book-card-cover" />
                   <p className="book-card-title">토막난 우주를 안고서</p>
                   <p className="book-card-year">2019</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="방금 떠나온 세계">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/방금 떠나온 세계.jpeg" alt="방금 떠나온 세계 책 표지" className="book-card-cover" />
                   <p className="book-card-title">방금 떠나온 세계</p>
                   <p className="book-card-year">2020</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="해파리 만개">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/해파리만개.jpeg" alt="해파리 만개 책 표지" className="book-card-cover" />
                   <p className="book-card-title">해파리 만개</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="양면의 조개껍데기">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/양면의 조개껍데기.jpeg" alt="양면의 조개껍데기 책 표지" className="book-card-cover" />
                   <p className="book-card-title">양면의 조개껍데기</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="지구 끝의 온실">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/지구 끝의 온실.jpeg" alt="지구 끝의 온실 책 표지" className="book-card-cover" />
                   <p className="book-card-title">지구 끝의 온실</p>
                   <p className="book-card-year">2021</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="행성어 서점">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/행성어 서점.jpeg" alt="행성어 서점 책 표지" className="book-card-cover" />
                   <p className="book-card-title">행성어 서점</p>
                   <p className="book-card-year">2022</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="므레모사">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/므레모사.jpeg" alt="므레모사 책 표지" className="book-card-cover" />
                   <p className="book-card-title">므레모사</p>
                   <p className="book-card-year">2023</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="아무튼, SF게임">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/아무튼, SF 게임.jpeg" alt="아무튼, SF게임 책 표지" className="book-card-cover" />
                   <p className="book-card-title">아무튼, SF게임</p>
                   <p className="book-card-year">2024</p>
                 </div>
                 <div className="book-card" role="link" tabIndex={0} aria-label="책과 우연들">
-                  <div className="author-photo-placeholder book-card-cover" style={{ aspectRatio:'3/4', height:'auto', fontSize:'0.6rem' }}>표지</div>
+                  <img src="/assets/images/책과 우연들.jpeg" alt="책과 우연들 책 표지" className="book-card-cover" />
                   <p className="book-card-title">책과 우연들</p>
                   <p className="book-card-year">2025</p>
                 </div>
@@ -636,12 +751,12 @@ export default function Home() {
               <nav className="story-index" aria-label="단편 목록" role="tablist">
                 {[
                   ['story-01','순례자들은 왜 돌아오지 않는가'],
-                  ['story-02','우리가 빛의 속도로 갈 수 없다면'],
-                  ['story-03','관내분실'],
-                  ['story-04','스펙트럼'],
-                  ['story-05','공생가설'],
-                  ['story-06','감정의 물성'],
-                  ['story-07','원통 안에서'],
+                  ['story-02','스펙트럼'],
+                  ['story-03','공생가설'],
+                  ['story-04','우리가 빛의 속도로 갈 수 없다면'],
+                  ['story-05','감정의 물성'],
+                  ['story-06','관내분실'],
+                  ['story-07','나의 우주 영웅에 관하여'],
                 ].map(([id, title], i) => (
                   <div className="story-index-item" data-story={id} role="tab" aria-selected="false" key={id}>
                     <span className="story-num">{String(i + 1).padStart(2, '0')}</span>
@@ -651,16 +766,32 @@ export default function Home() {
               </nav>
               <div className="story-panel" aria-live="polite">
                 {[
-                  { id:'story-01', num:'01 / 07', title:'순례자들은 왜 돌아오지 않는가', tags:['종교','이주','믿음','외계 행성'], synopsis:'외계 행성으로 순례를 떠난 사람들이 돌아오지 않는 이유를 추적하는 이야기. 종교적 신앙과 인간의 욕망, 그리고 다른 세계에 대한 갈망이 교차합니다.', quote:'"그들은 더 나은 세계를 찾아 떠났다. 하지만 더 나은 세계란 결국 자신이 만들어가는 것인지도 몰랐다."' },
-                  { id:'story-02', num:'02 / 07', title:'우리가 빛의 속도로 갈 수 없다면', tags:['그리움','기다림','우주 이주','시간의 흐름'], synopsis:'슬라우지 항성계로의 이주를 기다리는 노인 이야기. 빛의 속도보다 느린 세상에서, 수십 년을 기다려도 닿을 수 없는 그리움. 우주의 물리 법칙 앞에 선 인간의 감정이 가장 선명하게 드러나는 표제작입니다.', quote:'"우리가 빛의 속도로 갈 수 없다면, 우리는 영원히 만날 수 없는 걸까."' },
-                  { id:'story-03', num:'03 / 07', title:'관내분실', tags:['도서관','기억','죽음','존재'], synopsis:'죽은 사람들의 기억이 보관된 도서관. 사서는 그 기억들 사이에서 분실된 한 사람을 찾습니다. 존재의 흔적과 망각의 경계를 탐구합니다.', quote:'"사라진다는 것은 기억되지 않는다는 뜻이 아니다. 기억조차 분실될 수 있다는 것이다."' },
-                  { id:'story-04', num:'04 / 07', title:'스펙트럼', tags:['색채 감각','소통','외계인','차이'], synopsis:'색을 다르게 보는 외계 존재와의 첫 접촉. 같은 빛을 다르게 인식하는 존재들이 어떻게 서로를 이해할 수 있을지를 다루는 소통의 이야기입니다.', quote:'"같은 하늘을 보아도 우리는 서로 다른 색을 본다. 그래도 우리는 같은 하늘 아래 있다."' },
-                  { id:'story-05', num:'05 / 07', title:'공생가설', tags:['공생','진화','연결','과학'], synopsis:'인간과 미지의 생명체가 공생 관계를 형성하는 세계. 함께 살아간다는 것의 의미와, 다름을 받아들이는 것의 아름다움을 탐구합니다.', quote:'"우리는 혼자서 완전하지 않기 때문에 서로를 필요로 한다."' },
-                  { id:'story-06', num:'06 / 07', title:'감정의 물성', tags:['감정','물질','과학기술','슬픔'], synopsis:'감정이 물리적 물질로 존재하는 세계. 슬픔을 담은 병, 기쁨의 결정체. 감정의 본질과 우리가 감정을 어떻게 다루는지를 독특한 방식으로 이야기합니다.', quote:'"슬픔은 무겁다. 진짜로, 손으로 들 수 있을 만큼."' },
-                  { id:'story-07', num:'07 / 07', title:'원통 안에서', tags:['밀폐','고독','탐험','내면'], synopsis:'원통형 우주선 안에 갇힌 탐험가. 외부 세계와 단절된 공간에서 자신의 내면과 마주하는 고요하고 깊은 이야기입니다.', quote:'"이 원통 안에서 나는 드디어 나 자신을 만났다."' },
+                  { id:'story-01', num:'01 / 07', title:'순례자들은 왜 돌아오지 않는가', tags:['탐험','희생','기다림','미지'], synopsis:'우주 개척 시대. 새로운 행성을 찾기 위해 떠난 탐사대는 돌아오지 않는다. 남겨진 사람들은 그들을 기다리며 탐험이란 무엇인지, 인간은 왜 미지의 세계를 향하는지 고민한다.', quote:'"우리는 그곳에서 괴로울거야. 하지만 그보다 많이 행복할거야."' },
+                  { id:'story-02', num:'02 / 07', title:'스펙트럼', tags:['소통','이해','다양성','공존'], synopsis:'인간과 외계 생명체가 서로의 언어와 감각을 이해하려 노력하는 이야기. 서로 완전히 이해할 수 없지만, 이해하려는 노력 자체에 의미가 있음을 보여준다.', quote:'"세 번째 루이는 이전의 루이들처럼 그림을 그렸고 희진을 상냥하고 다정하게 대했다."' },
+                  { id:'story-03', num:'03 / 07', title:'공생 가설', tags:['공생','관계','생명','의존'], synopsis:'인간과 다른 생명체가 서로에게 영향을 주며 살아가는 관계를 그린다. 독립적으로 존재하는 것이 아니라 함께 살아가는 존재라는 점을 이야기한다.', quote:'"이름이 없는 행성. 그곳의 이름을 말로 표현할 수 없다는 사실은 오히려 그 신비한 세계에 몽환적인 상상을 덧대었다. 사람들은 그곳을 류드밀라의 행성이라고 불렀다."' },
+                  { id:'story-04', num:'04 / 07', title:'우리가 빛의 속도로 갈 수 없다면', tags:['기다림','그리움','상실','사랑'], synopsis:'우주정거장에 홀로 남은 한 여성이 가족을 만나기 위해 평생을 기다리는 이야기. 빛보다 빠르게 이동할 수 없는 세계에서 끝내 닿지 못하는 사랑을 담고 있다.', quote:'"우리가 빛의 속도로 갈 수조차 없다면, 같은 우주라는 개념이 대체 무슨 의미가 있나?"' },
+                  { id:'story-05', num:'05 / 07', title:'감정의 물성', tags:['감정','기억','선택','치유'], synopsis:'감정을 물질처럼 다룰 수 있는 미래 사회에서, 감정이 과연 제거하거나 통제해야 할 대상인지 질문한다.', quote:'"때로 어떤 사람들에게는 의미가 담긴 눈물이 아니라 단지 눈물 그 자체가 필요한 것 같기도 하다."' },
+                  { id:'story-06', num:'06 / 07', title:'관내분실', tags:['기억','상실','존재','흔적'], synopsis:'사라진 존재와 잊힌 기억을 추적하는 이야기. 기억 속에서조차 희미해지는 사람들의 흔적을 통해 존재의 의미를 되묻는다.', quote:'"만약 엄마가 이렇게 허탈하게 사라져버릴 줄 알았더라면 늦기 전에 이곳을 찾았을 텐데."' },
+                  { id:'story-07', num:'07 / 07', title:'나의 우주 영웅에 관하여', tags:['성장','동경','현실','용기'], synopsis:'어린 시절 동경했던 영웅을 다시 마주하며, 이상과 현실의 차이를 받아들이는 성장 이야기.', quote:'"가윤은 한때 재경을 보며 우주의 꿈을 꾸던 소녀였고, 이제 재경 다음에 온 사람이었다."' },
                 ].map(s => (
                   <article id={s.id} className="story-detail" role="tabpanel" key={s.id}>
-                    <div className="story-mood-placeholder" aria-label={`단편 배경 이미지 — ${s.title}`}>IMAGE: {s.id}.jpg</div>
+                    {s.id === 'story-01' ? (
+                      <img src="/assets/images/챕터1.png" alt="순례자들은 왜 돌아오지 않는가 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                    ) : s.id === 'story-02' ? (
+                      <img src="/assets/images/챕터2.png" alt="스펙트럼 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      ) : s.id === 'story-03' ? (
+                      <img src="/assets/images/챕터3.png" alt="공생 가설 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      ) : s.id === 'story-04' ? (
+                      <img src="/assets/images/챕터4.png" alt="우리가 빛의 속도로 갈 수 없다면 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      ) : s.id === 'story-05' ? (
+                      <img src="/assets/images/챕터5.png" alt="감정의 물성 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      ) : s.id === 'story-06' ? (
+                      <img src="/assets/images/챕터6.png" alt="관내분실 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                      ) : s.id === 'story-07' ? (
+                      <img src="/assets/images/챕터7.png" alt="나의 우주 영웅에 관하여 배경" className="story-image" style={{ objectFit: 'cover', width: '50%', height: '50%', display: 'block' }} />
+                    ) : (
+                      <div className="story-mood-placeholder" aria-label={`단편 배경 이미지 — ${s.title}`}>IMAGE: {s.id}.jpg</div>
+                    )}
                     <p className="story-detail-num">{s.num}</p>
                     <h3 className="story-detail-title">{s.title}</h3>
                     <div className="story-tags">
@@ -676,44 +807,47 @@ export default function Home() {
         </section>
 
         {/* ─── 4. MEMORY ─── */}
-        <section id="memory" className="section" aria-label="명장면 체험">
-          <div className="memory-header">
-            <p className="memory-section-label">Memory — 명장면</p>
-          </div>
-          <div className="memory-slider" role="region" aria-label="명장면 슬라이드">
-            {[
-              { bg:'memory/memory-01.jpg', bgColor:'#1a0a2a', label:'「우리가 빛의 속도로 갈 수 없다면」', quote:'"그녀는 삼십 년을 기다렸다.\n우주 정거장의 창밖으로 별들이 지나갔고,\n시간은 빛보다 느리게 흘렀다."', src:'— 우리가 빛의 속도로 갈 수 없다면 중에서' },
-              { bg:'memory/memory-02.jpg', bgColor:'#0a1a2a', label:'「관내분실」', quote:'"도서관 어딘가에 그의 기억이 있다.\n분실된 채로, 누군가가 찾아주기를 기다리며."', src:'— 관내분실 중에서' },
-              { bg:'memory/memory-03.jpg', bgColor:'#0a2a1a', label:'「스펙트럼」', quote:'"우리는 서로 다른 빛을 보았지만,\n같은 것을 사랑한다는 걸 알았을 때,\n비로소 우리는 연결되었다."', src:'— 스펙트럼 중에서' },
-              { bg:'memory/memory-04.jpg', bgColor:'#1a1a0a', label:'「감정의 물성」', quote:'"슬픔은 언제나 이렇게 무겁고,\n기쁨은 언제나 이렇게 쉽게 흩어지는 것인가."', src:'— 감정의 물성 중에서' },
-            ].map((slide, i) => (
-              <div className="memory-slide" role="group" aria-label={`명장면 ${i + 1}`} key={i}>
-                <div className="memory-slide-bg" style={{ backgroundImage:`url('/assets/images/${slide.bg}')`, backgroundColor:slide.bgColor }} aria-hidden="true"></div>
-                <div className="memory-slide-content">
-                  <p className="memory-story-label">{slide.label}</p>
-                  <blockquote className="memory-quote">
-                    {slide.quote.split('\n').map((line, j) => (
-                      <span key={j}>{line}{j < slide.quote.split('\n').length - 1 && <br />}</span>
-                    ))}
-                  </blockquote>
-                  <p className="memory-quote-source">{slide.src}</p>
-                </div>
+        <section id="memory" className="section" aria-label="편지 작성">
+          <div className="section-inner">
+            <p className="section-label reveal">Memory</p>
+            <hr className="section-divider reveal" />
+            <p className="memory-description reveal">당신의 그리움을 편지를 통해 전해보세요.</p>
+            
+            {/* 편지 작성 폼 */}
+            <div className="memory-form reveal">
+              <div className="memory-form-group">
+                <label className="memory-form-label" htmlFor="memory-from">From</label>
+                <input
+                  id="memory-from"
+                  type="text"
+                  className="memory-form-input"
+                  placeholder="이름을 입력하시오."
+                  aria-label="발신자 이름"
+                />
               </div>
-            ))}
-            <button className="memory-nav prev" aria-label="이전 명장면">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button className="memory-nav next" aria-label="다음 명장면">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-            <div className="memory-dots" role="tablist" aria-label="슬라이드 선택">
-              {[1,2,3,4].map(n => (
-                <button className="memory-dot" role="tab" aria-label={`명장면 ${n}`} key={n}></button>
-              ))}
+
+              <div className="memory-form-group">
+                <label className="memory-form-label" htmlFor="memory-message">Message</label>
+                <textarea
+                  id="memory-message"
+                  className="memory-textarea"
+                  placeholder="편지를 작성해주세요..."
+                  rows="6"
+                  aria-label="편지 내용"
+                ></textarea>
+              </div>
+
+              <div className="memory-btn-wrapper">
+                <button id="memory-send-btn" className="memory-btn" aria-label="편지 등록">
+                  SEND
+                </button>
+                <span id="memory-success-msg" className="memory-success-msg" role="status" aria-live="polite">그리움이 전송되었습니다.</span>
+              </div>
+            </div>
+
+            {/* 등록 목록 */}
+            <div className="memory-list-section reveal">
+              <div id="memory-list" className="memory-list" role="region" aria-label="등록된 편지 목록"></div>
             </div>
           </div>
         </section>
@@ -725,9 +859,7 @@ export default function Home() {
             <hr className="section-divider reveal" />
             <div className="purchase-inner">
               <div className="purchase-book-wrap reveal">
-                <div className="purchase-book-placeholder" aria-label="책 표지 이미지 영역">
-                  📖<br /><span style={{ fontSize:'0.7rem', color:'var(--color-text-dim)', marginTop:'0.5rem', display:'block' }}>book-cover.jpg</span>
-                </div>
+                <img src="/assets/images/책표지.jpeg" alt="우리가 빛의 속도로 갈 수 없다면 책 표지" className="purchase-book-image" style={{ objectFit: 'contain', width: '100%', height: '100%', display: 'block' }} />
               </div>
               <p className="purchase-copy reveal">
                 지금, 빛의 속도로<br />당신에게 닿기를.
@@ -737,19 +869,19 @@ export default function Home() {
                 <button className="purchase-tab" data-tab="ebook" role="tab">전자책</button>
               </div>
               <div className="purchase-stores store-group" data-group="paper">
-                <a className="store-btn" href="https://www.kyobobook.co.kr" target="_blank" rel="noopener noreferrer" aria-label="교보문고에서 구매"><span className="store-icon">📚</span> 교보문고</a>
-                <a className="store-btn" href="https://www.yes24.com" target="_blank" rel="noopener noreferrer" aria-label="예스24에서 구매"><span className="store-icon">📚</span> 예스24</a>
-                <a className="store-btn" href="https://www.aladin.co.kr" target="_blank" rel="noopener noreferrer" aria-label="알라딘에서 구매"><span className="store-icon">📚</span> 알라딘</a>
+                <a className="store-btn" href="https://product.kyobobook.co.kr/detail/S000001935245" target="_blank" rel="noopener noreferrer" aria-label="교보문고에서 구매"><span className="store-icon"> 교보문고</span></a>
+                <a className="store-btn" href="https://www.yes24.com/Product/Goods/74261416" target="_blank" rel="noopener noreferrer" aria-label="예스24에서 구매"><span className="store-icon"> 예스24</span></a>
+                <a className="store-btn" href="https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=193591681&start=pcsearch_auto" target="_blank" rel="noopener noreferrer" aria-label="알라딘에서 구매"><span className="store-icon"> 알라딘</span></a>
               </div>
               <div className="purchase-stores store-group" data-group="ebook" style={{ display:'none' }}>
-                <a className="store-btn" href="https://ridibooks.com" target="_blank" rel="noopener noreferrer" aria-label="리디북스에서 구매"><span className="store-icon">📱</span> 리디북스</a>
-                <a className="store-btn" href="https://www.millie.co.kr" target="_blank" rel="noopener noreferrer" aria-label="밀리의 서재에서 구매"><span className="store-icon">📱</span> 밀리의 서재</a>
-                <a className="store-btn" href="https://series.naver.com" target="_blank" rel="noopener noreferrer" aria-label="네이버 시리즈에서 구매"><span className="store-icon">📱</span> 네이버 시리즈</a>
+                <a className="store-btn" href="https://ridibooks.com/books/4097000095?_s=instant&_q=%EC%9A%B0%EB%A6%AC%EA%B0%80+%EB%B9%9B%EC%9D%98&_rdt_sid=search_instant&_rdt_idx=4&_rdt_arg=%EC%9A%B0%EB%A6%AC%EA%B0%80+%EB%B9%9B%EC%9D%98" target="_blank" rel="noopener noreferrer" aria-label="리디북스에서 구매"><span className="store-icon"> 리디북스</span></a>
+                <a className="store-btn" href="https://www.yes24.com/product/goods/77220299" target="_blank" rel="noopener noreferrer" aria-label="예스24에서 구매"><span className="store-icon"> 예스24</span></a>
+                <a className="store-btn" href="https://series.naver.com/ebook/detail.series?productNo=4375685" target="_blank" rel="noopener noreferrer" aria-label="네이버 시리즈에서 구매"><span className="store-icon"> 네이버 시리즈</span></a>
               </div>
               <div className="purchase-info reveal">
                 <span>초판 2019.06.24</span>
                 <span>허블 출판사</span>
-                <span>ISBN 979-11-965817-2-3</span>
+                <span>김초엽 작가의 단편 소설집</span>
               </div>
             </div>
           </div>
@@ -761,27 +893,66 @@ export default function Home() {
             <p className="section-label reveal">Work</p>
             <hr className="section-divider reveal" />
             <div className="work-inner">
-              <p className="work-tagline reveal">이 작품에 영감을 받아 만든 것들</p>
-              <div className="work-card reveal" id="work-card-1" role="button" tabIndex={0} aria-label="작업물 상세 보기">
+              {/* 좌측 칼럼 - Type Flyer */}
+              <div className="work-card reveal" id="work-card-1" role="button" tabIndex={0} aria-label="작업물 상세 보기" onClick={() => {
+                document.querySelector('.work-modal-overlay-1').classList.add('open');
+              }}>
                 <div className="work-card-image-wrap">
-                  <div className="work-card-placeholder" aria-label="작업물 이미지 영역">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" aria-hidden="true">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 15l-5-5L5 21" />
-                    </svg>
-                    <span>work-01.jpg</span>
-                  </div>
+                  <img src="/assets/images/최종플라이어1.png" alt="Type Flyer 이미지" className="work-card-image" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   <div className="work-card-overlay"><span>View Work</span></div>
                 </div>
                 <div className="work-card-info">
-                  <h3 className="work-card-title">작업물 제목을 입력하세요</h3>
+                  <h3 className="work-card-title">Type Flyer</h3>
                   <p className="work-card-desc">
-                    작업물에 대한 간단한 설명을 이곳에 입력합니다.
-                    어떤 작업이었는지, 무엇을 담고 싶었는지 자유롭게 써주세요.
+                     타입 플라이어입니다. 그리움과 쓸쓸함을 나타내고자 하였으며 도달하지 못한 사랑을 표현하고자 했습니다.
                   </p>
                   <button className="work-card-btn" aria-label="작업물 자세히 보기">
                     View Detail
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {/* 가운데 칼럼 - 모션 이미지 */}
+              <div className="work-card reveal" id="work-card-2" role="button" tabIndex={0} aria-label="작업물 상세 보기" onClick={() => {
+                document.querySelector('.work-modal-overlay-2').classList.add('open');
+              }}>
+                <div className="work-card-image-wrap">
+                  <img src="/assets/images/1_최현지_우리가 빛의 속도로 갈 수 없다면.gif" alt="Motion 이미지" className="work-card-image" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', aspectRatio: '1 / 1' }} />
+                  <div className="work-card-overlay"><span>View Work</span></div>
+                </div>
+                <div className="work-card-info">
+                  <h3 className="work-card-title">Motion</h3>
+                  <p className="work-card-desc">
+                    Type Flyer를 활용한 모션입니다. 그리움과 기다림을 표현하고자 했으며, 도달하지 못한 사랑을 담고자 했습니다.
+                  </p>
+                  <button className="work-card-btn" aria-label="작업물 자세히 보기" onClick={(e) => {
+                    e.stopPropagation();
+                    document.querySelector('.work-modal-overlay-2').classList.add('open');
+                  }}>
+                    View Detail
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {/* 우측 칼럼 - 유튜브 영상 */}
+              <div className="work-card reveal" id="work-card-3" role="button" tabIndex={0} aria-label="유튜브 영상">
+                <div className="work-card-image-wrap" onClick={() => window.open('https://www.youtube.com/watch?v=ko_QgC5NlZY&feature=youtu.be', '_blank')}>
+                  <img src="https://img.youtube.com/vi/ko_QgC5NlZY/maxresdefault.jpg" alt="유튜브 영상 썸네일" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <div className="work-card-overlay"><span>Watch Video</span></div>
+                </div>
+                <div className="work-card-info">
+                  <h3 className="work-card-title">Book Trailer</h3>
+                  <p className="work-card-desc">
+                    본 책 챕터 중 4편의 '우리가 빛의 속도로 갈 수 없다면'의 북 트레일러 영상입니다. 주인공의 그리움과 기다림을 보여주고자 했습니다.
+                  </p>
+                  <button className="work-card-btn" aria-label="유튜브에서 보기" onClick={(e) => { e.preventDefault(); window.open('https://www.youtube.com/watch?v=ko_QgC5NlZY&feature=youtu.be', '_blank'); }}>
+                    Watch Video
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                     </svg>
@@ -796,26 +967,44 @@ export default function Home() {
       {/* FOOTER */}
       <footer id="site-footer">
         <p className="footer-text">
-          © 2024 · 『우리가 빛의 속도로 갈 수 없다면』 · 김초엽 · 팬 제작 비공식 사이트
+          © 2026· 『우리가 빛의 속도로 갈 수 없다면』 · 김초엽 · 책 홍보 사이트
         </p>
       </footer>
 
-      {/* WORK 모달 */}
-      <div className="work-modal-overlay" role="dialog" aria-modal="true" aria-label="작업물 상세">
+      {/* WORK 모달 - 좌측 카드 (Type Flyer) */}
+      <div className="work-modal-overlay work-modal-overlay-1" role="dialog" aria-modal="true" aria-label="작업물 상세">
         <div className="work-modal">
-          <button className="work-modal-close" aria-label="모달 닫기">✕ Close</button>
-          <div style={{ width:'100%', height:'300px', background:'var(--color-bg-card)', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--color-text-dim)', fontFamily:'var(--font-mono)', fontSize:'0.7rem', letterSpacing:'0.1em' }}>
-            work-01.jpg (상세 이미지)
-          </div>
+          <button className="work-modal-close" aria-label="모달 닫기" onClick={(e) => {
+            e.target.closest('.work-modal-overlay-1').classList.remove('open');
+          }}>✕ Close</button>
+          <img src="/assets/images/최종플라이어1.png" alt="Type Flyer 상세 이미지" style={{ width:'100%', height:'auto', display:'block' }} />
           <div className="work-modal-body">
-            <h2 className="work-modal-title">작업물 제목</h2>
+            <h2 className="work-modal-title">Type Flyer</h2>
             <p className="work-modal-desc">
-              작업물에 대한 상세 설명을 이곳에 입력합니다.
-              사용한 도구, 작업 과정, 담고 싶었던 이야기 등을 자유롭게 서술해 주세요.
+              '우리가 빛의 속도로 갈 수 없다면'을 활용한 타입 플라이어입니다. 그리움과 쓸쓀함을 나타내고자 하였으며 도달하지 못한 사랑을 표현하고자 했습니다.
             </p>
           </div>
         </div>
       </div>
+
+      {/* WORK 모달 - 가운데 카드 (Motion) */}
+      <div className="work-modal-overlay work-modal-overlay-2" role="dialog" aria-modal="true" aria-label="작업물 상세">
+        <div className="work-modal">
+          <button className="work-modal-close" aria-label="모달 닫기" onClick={(e) => {
+            e.target.closest('.work-modal-overlay-2').classList.remove('open');
+          }}>✕ Close</button>
+          <img src="/assets/images/1_최현지_우리가 빛의 속도로 갈 수 없다면.gif" alt="Motion 상세 이미지" style={{ width:'100%', height:'auto', display:'block' }} />
+          <div className="work-modal-body">
+            <h2 className="work-modal-title">Motion</h2>
+            <p className="work-modal-desc">
+              Type Flyer를 활용한 모션입니다. 그리움과 기다림을 표현하고자 했으며, 도달하지 못한 사랑을 담고자 했습니다.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* 커스텀 마우스 커서 스크립트 */}
+      
     </>
   )
 }

@@ -8,17 +8,17 @@
   --color-bg-primary:   #05050F;   /* Deep Space  */
   --color-bg-secondary: #0A0A1A;   /* Void Black  */
   --color-bg-card:      #0D0D2B;   /* Nebula Dark */
-  --color-bg-overlay:   rgba(5, 5, 15, 0.85);
+  --color-bg-overlay:   #000000;
 
   /* ── 보조색 (텍스트 · 선) ── */
   --color-text-primary: #F0F0F5;   /* Star White  */
-  --color-text-dim:     #8888AA;   /* Dim Light   */
-  --color-border:       #2A2A4A;   /* Galaxy Line */
+  --color-text-dim:     #afafaf;   /* Dim Light   */
+  --color-border:       #464646;   /* Galaxy Line */
 
   /* ── 포인트색 (강조) ── */
-  --color-accent-blue:  #4A9EFF;   /* Signal Blue  */
-  --color-accent-teal:  #39D9C6;   /* Aurora Teal  */
-  --color-accent-violet:#7B5EFF;   /* Pulsar Glow  */
+  --color-accent-blue:  #8ad5ff;   /* Signal Blue  */
+  --color-accent-teal:  #8ad5ff;   /* Aurora Teal  */
+  --color-accent-violet:#8ad5ff;   /* Pulsar Glow  */
 
   /* ── 그라디언트 ── */
   --gradient-heading: linear-gradient(135deg, #7B5EFF, #4A9EFF, #39D9C6);

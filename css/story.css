@@ -3,7 +3,7 @@
 ============================================ */
 
 #story {
-  background: var(--color-bg-primary);
+  background: #000000;
 }
 
 #story .section-label {
@@ -236,4 +236,7 @@
   .story-index-item::before { display: none; }
 
   .story-detail { position: relative; }
+}/* ── Story 섹션 가로폭 조정 ── */
+#story .section-inner {
+  max-width: 1050px;
 }

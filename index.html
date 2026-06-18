@@ -31,9 +31,15 @@
   <link rel="stylesheet" href="css/memory.css" />
   <link rel="stylesheet" href="css/purchase.css" />
   <link rel="stylesheet" href="css/work.css" />
+  <link rel="stylesheet" href="css/cursor.css" />
 </head>
 
 <body>
+
+  <!-- ═══════════════════════════════════════
+       커스텀 마우스 커서 컨테이너
+  ════════════════════════════════════════ -->
+  <div id="cursor-container" aria-hidden="true"></div>
 
   <!-- ═══════════════════════════════════════
        파티클 캔버스 (별 배경)
@@ -376,14 +382,14 @@
               <p class="story-detail-num">01 / 07</p>
               <h3 class="story-detail-title">순례자들은 왜 돌아오지 않는가</h3>
               <div class="story-tags">
-                <span class="story-tag">종교</span>
-                <span class="story-tag">이주</span>
-                <span class="story-tag">믿음</span>
-                <span class="story-tag">외계 행성</span>
+                <span class="story-tag">탐험</span>
+                <span class="story-tag">희생</span>
+                <span class="story-tag">기다림</span>
+                <span class="story-tag">미지</span>
               </div>
               <p class="story-synopsis">
-                외계 행성으로 순례를 떠난 사람들이 돌아오지 않는 이유를 추적하는 이야기.
-                종교적 신앙과 인간의 욕망, 그리고 다른 세계에 대한 갈망이 교차합니다.
+                우주 개척 시대. 새로운 행성을 찾기 위해 떠난 탐사대는 돌아오지 않는다. 
+                남겨진 사람들은 그들을 기다리며 '탐험'이란 무엇인지, 인간은 왜 미지의 세계를 향하는지 고민한다.
               </p>
               <blockquote class="story-highlight">
                 "그들은 더 나은 세계를 찾아 떠났다. 하지만 더 나은 세계란 결국 자신이 만들어가는 것인지도 몰랐다."
@@ -394,20 +400,19 @@
             <article id="story-02" class="story-detail" role="tabpanel">
               <div class="story-mood-placeholder" aria-label="단편 배경 이미지 — 우주 정거장">IMAGE: story-02.jpg</div>
               <p class="story-detail-num">02 / 07</p>
-              <h3 class="story-detail-title">우리가 빛의 속도로 갈 수 없다면</h3>
+              <h3 class="story-detail-title">스펙트럼</h3>
               <div class="story-tags">
-                <span class="story-tag">그리움</span>
-                <span class="story-tag">기다림</span>
-                <span class="story-tag">우주 이주</span>
-                <span class="story-tag">시간의 흐름</span>
+                <span class="story-tag">소통</span>
+                <span class="story-tag">이해</span>
+                <span class="story-tag">다양성</span>
+                <span class="story-tag">공존</span>
               </div>
               <p class="story-synopsis">
-                슬라우지 항성계로의 이주를 기다리는 노인 이야기.
-                빛의 속도보다 느린 세상에서, 수십 년을 기다려도 닿을 수 없는 그리움.
-                우주의 물리 법칙 앞에 선 인간의 감정이 가장 선명하게 드러나는 표제작입니다.
+                인간과 외계 생명체가 서로의 언어와 감각을 이해하려 노력하는 이야기. 
+                서로 완전히 이해할 수 없지만, 이해하려는 노력 자체에 의미가 있음을 보여준다.
               </p>
               <blockquote class="story-highlight">
-                "우리가 빛의 속도로 갈 수 없다면, 우리는 영원히 만날 수 없는 걸까."
+                "같은 하늘을 보아도 우리는 서로 다른 색을 본다. 그래도 우리는 같은 하늘 아래 있다."
               </blockquote>
             </article>
 
@@ -415,12 +420,12 @@
             <article id="story-03" class="story-detail" role="tabpanel">
               <div class="story-mood-placeholder" aria-label="단편 배경 이미지 — 도서관">IMAGE: story-03.jpg</div>
               <p class="story-detail-num">03 / 07</p>
-              <h3 class="story-detail-title">관내분실</h3>
+              <h3 class="story-detail-title">공생가설</h3>
               <div class="story-tags">
-                <span class="story-tag">도서관</span>
-                <span class="story-tag">기억</span>
-                <span class="story-tag">죽음</span>
-                <span class="story-tag">존재</span>
+                <span class="story-tag">공생</span>
+                <span class="story-tag">관계</span>
+                <span class="story-tag">생명</span>
+                <span class="story-tag">의존</span>
               </div>
               <p class="story-synopsis">
                 죽은 사람들의 기억이 보관된 도서관. 사서는 그 기억들 사이에서
@@ -435,16 +440,16 @@
             <article id="story-04" class="story-detail" role="tabpanel">
               <div class="story-mood-placeholder" aria-label="단편 배경 이미지 — 빛의 스펙트럼">IMAGE: story-04.jpg</div>
               <p class="story-detail-num">04 / 07</p>
-              <h3 class="story-detail-title">스펙트럼</h3>
+              <h3 class="story-detail-title">우리가 빛의 속도로 갈 수 없다면</h3>
               <div class="story-tags">
-                <span class="story-tag">색채 감각</span>
-                <span class="story-tag">소통</span>
-                <span class="story-tag">외계인</span>
-                <span class="story-tag">차이</span>
+                <span class="story-tag">기다림</span>
+                <span class="story-tag">그리움</span>
+                <span class="story-tag">상실</span>
+                <span class="story-tag">사랑</span>
               </div>
               <p class="story-synopsis">
-                색을 다르게 보는 외계 존재와의 첫 접촉. 같은 빛을 다르게 인식하는
-                존재들이 어떻게 서로를 이해할 수 있을지를 다루는 소통의 이야기입니다.
+                우주정거장에 홀로 남은 한 여성이 가족을 만나기 위해 평생을 기다리는 이야기. 
+                빛보다 빠르게 이동할 수 없는 세계에서 끝내 닿지 못하는 사랑을 담고 있다.
               </p>
               <blockquote class="story-highlight">
                 "같은 하늘을 보아도 우리는 서로 다른 색을 본다. 그래도 우리는 같은 하늘 아래 있다."
@@ -455,12 +460,12 @@
             <article id="story-05" class="story-detail" role="tabpanel">
               <div class="story-mood-placeholder" aria-label="단편 배경 이미지 — 공생 생명">IMAGE: story-05.jpg</div>
               <p class="story-detail-num">05 / 07</p>
-              <h3 class="story-detail-title">공생가설</h3>
+              <h3 class="story-detail-title">감정의 물성</h3>
               <div class="story-tags">
-                <span class="story-tag">공생</span>
-                <span class="story-tag">진화</span>
-                <span class="story-tag">연결</span>
-                <span class="story-tag">과학</span>
+                <span class="story-tag">감정</span>
+                <span class="story-tag">기억</span>
+                <span class="story-tag">선택</span>
+                <span class="story-tag">치유</span>
               </div>
               <p class="story-synopsis">
                 인간과 미지의 생명체가 공생 관계를 형성하는 세계. 함께 살아간다는 것의
@@ -475,16 +480,16 @@
             <article id="story-06" class="story-detail" role="tabpanel">
               <div class="story-mood-placeholder" aria-label="단편 배경 이미지 — 물과 유리">IMAGE: story-06.jpg</div>
               <p class="story-detail-num">06 / 07</p>
-              <h3 class="story-detail-title">감정의 물성</h3>
+              <h3 class="story-detail-title">관내분실</h3>
               <div class="story-tags">
-                <span class="story-tag">감정</span>
-                <span class="story-tag">물질</span>
-                <span class="story-tag">과학기술</span>
-                <span class="story-tag">슬픔</span>
+                <span class="story-tag">기억</span>
+                <span class="story-tag">상실</span>
+                <span class="story-tag">존재</span>
+                <span class="story-tag">흔적</span>
               </div>
               <p class="story-synopsis">
-                감정이 물리적 물질로 존재하는 세계. 슬픔을 담은 병, 기쁨의 결정체.
-                감정의 본질과 우리가 감정을 어떻게 다루는지를 독특한 방식으로 이야기합니다.
+                사라진 존재와 잊힌 기억을 추적하는 이야기. 
+                기억 속에서조차 희미해지는 사람들의 흔적을 통해 존재의 의미를 되묻는다.
               </p>
               <blockquote class="story-highlight">
                 "슬픔은 무겁다. 진짜로, 손으로 들 수 있을 만큼."
@@ -495,16 +500,16 @@
             <article id="story-07" class="story-detail" role="tabpanel">
               <div class="story-mood-placeholder" aria-label="단편 배경 이미지 — 원통 공간">IMAGE: story-07.jpg</div>
               <p class="story-detail-num">07 / 07</p>
-              <h3 class="story-detail-title">원통 안에서</h3>
+              <h3 class="story-detail-title">나의 우주 영웅에 관하여</h3>
               <div class="story-tags">
-                <span class="story-tag">밀폐</span>
-                <span class="story-tag">고독</span>
-                <span class="story-tag">탐험</span>
-                <span class="story-tag">내면</span>
+                <span class="story-tag">성장</span>
+                <span class="story-tag">동경</span>
+                <span class="story-tag">현실</span>
+                <span class="story-tag">용기</span>
               </div>
               <p class="story-synopsis">
-                원통형 우주선 안에 갇힌 탐험가. 외부 세계와 단절된 공간에서
-                자신의 내면과 마주하는 고요하고 깊은 이야기입니다.
+                어린 시절 동경했던 영웅을 다시 마주하며, 
+                이상과 현실의 차이를 받아들이는 성장 이야기.
               </p>
               <blockquote class="story-highlight">
                 "이 원통 안에서 나는 드디어 나 자신을 만났다."
@@ -662,8 +667,8 @@
               <span class="store-icon">📱</span> 리디북스
             </a>
             <a class="store-btn" href="https://www.millie.co.kr" target="_blank" rel="noopener noreferrer"
-              aria-label="밀리의 서재에서 구매">
-              <span class="store-icon">📱</span> 밀리의 서재
+              aria-label="예스24에서 구매">
+              <span class="store-icon">📱</span> 예스24
             </a>
             <a class="store-btn" href="https://series.naver.com" target="_blank" rel="noopener noreferrer"
               aria-label="네이버 시리즈에서 구매">
@@ -688,7 +693,7 @@
         <hr class="section-divider reveal" />
 
         <div class="work-inner">
-          <p class="work-tagline reveal">이 작품에 영감을 받아 만든 것들</p>
+          <p class="work-tagline reveal">Work</p>
 
           <!-- 단일 작업물 카드 -->
           <div class="work-card reveal" id="work-card-1" role="button" tabindex="0" aria-label="작업물 상세 보기">
@@ -710,10 +715,11 @@
 
             <!-- 텍스트 -->
             <div class="work-card-info">
-              <h3 class="work-card-title">작업물 제목을 입력하세요</h3>
+              <h3 class="work-card-title">Type Flyer</h3>
               <p class="work-card-desc">
-                작업물에 대한 간단한 설명을 이곳에 입력합니다.
-                어떤 작업이었는지, 무엇을 담고 싶었는지 자유롭게 써주세요.
+                어도비 일러스레이터로 작업한 타입플라이어입니다.
+                점점 멀어져 가는 상황에 대한 그리움을 우주의 느낌으로
+                나타내고자하였습니다.
               </p>
               <button class="work-card-btn" aria-label="작업물 자세히 보기">
                 View Detail
@@ -735,7 +741,7 @@
   ════════════════════════════════════════ -->
   <footer id="site-footer">
     <p class="footer-text">
-      © 2024 · 『우리가 빛의 속도로 갈 수 없다면』 · 김초엽 · 팬 제작 비공식 사이트
+      © 2026 · 『우리가 빛의 속도로 갈 수 없다면』 · 김초엽 · 책 사이트
     </p>
   </footer>
 
@@ -751,10 +757,11 @@
         work-01.jpg (상세 이미지)
       </div>
       <div class="work-modal-body">
-        <h2 class="work-modal-title">작업물 제목</h2>
+        <h2 class="work-modal-title">Type Flyer</h2>
         <p class="work-modal-desc">
-          작업물에 대한 상세 설명을 이곳에 입력합니다.
-          사용한 도구, 작업 과정, 담고 싶었던 이야기 등을 자유롭게 서술해 주세요.
+          어도비 일러스레이터로 작업한 타입플라이어입니다.
+          점점 멀어져 가는 상황에 대한 그리움을 우주의 느낌으로
+          나타내고자하였습니다.
         </p>
       </div>
     </div>
@@ -769,6 +776,7 @@
   <script src="js/story.js"></script>
   <script src="js/memory.js"></script>
   <script src="js/work.js"></script>
+  <script src="js/cursor-effect.js"></script>
 
 </body>
 
